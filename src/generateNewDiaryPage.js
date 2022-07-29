@@ -1,9 +1,14 @@
 import { Client } from "@notionhq/client";
 import { getRandomEmoji } from './getRandomEmoji.js';
 
+import path, { dirname } from 'path';
 import dotenv from 'dotenv';
 
-dotenv.config();
+import { fileURLToPath } from 'node:url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+dotenv.config({ path: path.resolve(__dirname, '..','.env') })
 
 const diaryDatabaseId = process.env.DIARY_DATABASE 
 const pageTemplateId = process.env.PAGE_TEMPLATE

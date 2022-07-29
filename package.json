@@ -1,13 +1,13 @@
 {
   "name": "notion-extensions",
   "version": "1.0.0",
-  "main": "index.js",
   "license": "MIT",
   "type": "module",
   "dependencies": {
     "@notionhq/client": "^0.4.13",
     "axios": "^0.25.0",
     "dotenv": "^15.0.0",
+    "moment": "^2.29.4",
     "nodemon": "^2.0.15"
   }
 }
