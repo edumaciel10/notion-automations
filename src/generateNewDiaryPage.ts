@@ -1,12 +1,8 @@
 import { Client } from "@notionhq/client";
 import { getRandomEmoji } from './getRandomEmoji.js';
 
-import path, { dirname } from 'path';
+import path from 'path';
 import dotenv from 'dotenv';
-
-import { fileURLToPath } from 'node:url';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
 
 dotenv.config({ path: path.resolve(__dirname, '..','.env') })
 
@@ -17,7 +13,7 @@ const notion = new Client({
   auth: process.env.NOTION_TOKEN
 })
 
-const getPageTemplate = async (databaseId, pageId ) => {
+const getPageTemplate = async (databaseId: string, pageId: string ) => {
   var tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
   var localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
   
@@ -56,7 +52,7 @@ const getPageTemplate = async (databaseId, pageId ) => {
   return pageTemplate;
 }
 
-const getDatabaseSchema = async (database = diaryDatabase) => {
+const getDatabaseSchema = async (database = diaryDatabaseId) => {
   const response = await notion.databases.retrieve({database_id: database});
   console.log(response);
 }
@@ -73,6 +69,7 @@ const getPageProperties = async(pageId) => {
 const createPageFromTemplate = async(template) => {
   const response = await notion.pages.create(template);
   console.log(response);
+  return response;
 }
 
 const getBlocksFromTemplate = async(pageId) => {
@@ -83,8 +80,7 @@ const getBlocksFromTemplate = async(pageId) => {
   return response.results;
 }
 
-;(async () => {
+export const generateNewDiaryPage = async() => {
   const pageTemplate = await getPageTemplate(diaryDatabaseId,pageTemplateId);
-  await createPageFromTemplate(pageTemplate);
-  console.log('Worked fine');
-})();
+  return await createPageFromTemplate(pageTemplate);
+};

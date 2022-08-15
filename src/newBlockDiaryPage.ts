@@ -6,7 +6,6 @@ import dotenv from 'dotenv';
 
 import { fileURLToPath } from 'node:url';
 import moment from 'moment';
-const __dirname = dirname(fileURLToPath(import.meta.url));
 
 dotenv.config({ path: path.resolve(__dirname, '..','.env') })
 
@@ -16,7 +15,7 @@ const notion = new Client({
   auth: process.env.NOTION_TOKEN
 })
 
-const getLastPageFromDatabase = async(database = diaryDatabase) => {
+const getLastPageFromDatabase = async(database = diaryDatabaseId) => {
   const response = await notion.databases.query({
     database_id: database,
     sorts: [
@@ -60,10 +59,11 @@ const appendText = async(pageId, content) => {
     ],
   });
   console.log({response});
+  return response;
 }
-;(async () => {
+
+export const newBlockDiaryPage = async(message ?: string) => {
   const lastPageId = await getLastPageFromDatabase(diaryDatabaseId);
-  const content = process.argv.slice(2).join(' ');
-  await appendText(lastPageId, content);
-  console.log('Worked fine');
-})();
+  const content = message ?? process.argv.slice(2).join(' ');
+  return await appendText(lastPageId, content);
+}

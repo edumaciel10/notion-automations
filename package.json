@@ -2,12 +2,34 @@
   "name": "notion-extensions",
   "version": "1.0.0",
   "license": "MIT",
-  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"npm run watch-compile\" \"npm run watch-dev\"",
+    "watch-compile": "swc src -w --out-dir dist",
+    "watch-dev": "nodemon --watch \"dist/**/*\" -e js ./dist/main.js",
+    "build": "swc src -d dist",
+    "start": "NODE_ENV=production node dist/main.js",
+    "clean": "rm -rf dist"
+  },
   "dependencies": {
     "@notionhq/client": "^0.4.13",
     "axios": "^0.25.0",
     "dotenv": "^15.0.0",
     "moment": "^2.29.4",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "@koa/router": "^12.0.0",
+    "koa": "^2.13.4",
+    "koa-body": "^5.0.0",
+    "koa-router": "^12.0.0"
+  },
+  "devDependencies": {
+    "@swc/cli": "^0.1.57",
+    "@swc/core": "^1.2.231",
+    "@types/koa": "^2.13.5",
+    "@types/koa__router": "^8.0.11",
+    "@types/koa-router": "^7.4.4",
+    "@types/node": "^18.7.3",
+    "chokidar": "^3.5.3",
+    "concurrently": "^7.3.0",
+    "typescript": "^4.7.4"
   }
 }
