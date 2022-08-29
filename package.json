@@ -5,11 +5,11 @@
   "scripts": {
     "dev": "concurrently \"npm run watch-compile\" \"npm run watch-dev\"",
     "watch-compile": "swc src -w --out-dir dist",
-    "watch-dev": "nodemon --watch \"dist/**/*\" -e js ./dist/main.js",
+    "watch-dev": "nodemon --watch \"dist/**/*\" -e js ./dist/index.js",
     "build": "swc src -d dist",
-    "start": "NODE_ENV=production node dist/main.js",
+    "start": "NODE_ENV=production node dist/index.js",
     "clean": "rm -rf dist",
-    "start:dev": "NODE_ENV=development node dist/main.js"
+    "start:dev": "NODE_ENV=development node dist/index.js"
   },
   "dependencies": {
     "@notionhq/client": "^0.4.13",
