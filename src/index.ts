@@ -9,7 +9,8 @@ const app = new Koa()
 app.use(koaBody())
 app.use(KoaRouter.routes())
 
-app.listen(3000)
-console.log('Server started on port 3000')
+app.listen(3000, () => {
+  console.log("listening on port 3000");
+});
 module.exports = app;
 
